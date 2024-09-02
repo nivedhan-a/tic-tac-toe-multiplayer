@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            axios.get('http://localhost:4000/users/validateToken')
+            axios.get('https://tic-tac-toe-multiplayer-pied.vercel.app/users/validateToken')
                 .then(response => {
                     setIsAuthenticated(true);
                     setUser(response.data.user);
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             socketRef.current.disconnect();
         }
 
-        socketRef.current = io('http://localhost:4000', {
+        socketRef.current = io('https://tic-tac-toe-multiplayer-pied.vercel.app', {
             query: { username }
         });
 
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post('http://localhost:4000/users/login', { email, password });
+            const response = await axios.post('https://tic-tac-toe-multiplayer-pied.vercel.app/users/login', { email, password });
             setIsAuthenticated(true);
             setUser(response.data.user);
             localStorage.setItem('token', response.data.token);
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (email, username, password) => {
         try {
-            const response = await axios.post('http://localhost:4000/users/register', { email, username, password });
+            const response = await axios.post('https://tic-tac-toe-multiplayer-pied.vercel.app/users/register', { email, username, password });
             setIsAuthenticated(true);
             setUser(response.data.user);
             localStorage.setItem('token', response.data.token);
