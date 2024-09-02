@@ -7,6 +7,8 @@ const friendRoutes = require("./routes/friendRoutes");
 const scoreRoutes = require("./routes/scoreRoutes");
 const socketIo = require("socket.io");
 const socketController = require("./controllers/socketController");
+require('dotenv').config();
+
 
 const app = express();
 const server = http.createServer(app);

@@ -1,14 +1,13 @@
-const db = require('../db/database');
-
+const db = require('../db/database'); 
 
 // Register a new user
 function registerUser(email, username, password, callback) {
     const query = `INSERT INTO users (email, username, password) VALUES (?, ?, ?)`;
-    db.run(query, [email, username, password], function (err) {
+    db.execute(query, [email, username, password], (err, results) => {
         if (err) {
             callback(err);
         } else {
-            callback(null, { id: this.lastID, email, username });
+            callback(null, { id: results.insertId, email, username });
         }
     });
 }
@@ -16,11 +15,11 @@ function registerUser(email, username, password, callback) {
 // Check username availability
 function checkUsernameAvailability(username, callback) {
     const query = `SELECT COUNT(*) as count FROM users WHERE username = ?`;
-    db.get(query, [username], (err, row) => {
+    db.query(query, [username], (err, results) => {
         if (err) {
             callback(err);
         } else {
-            callback(null, row.count === 0);
+            callback(null, results[0].count === 0);
         }
     });
 }
@@ -28,11 +27,11 @@ function checkUsernameAvailability(username, callback) {
 // Login a user
 function loginUser(email, callback) {
     const query = `SELECT * FROM users WHERE email = ?`;
-    db.get(query, [email], (err, row) => {
+    db.query(query, [email], (err, results) => {
         if (err) {
             callback(err);
         } else {
-            callback(null, row);
+            callback(null, results[0] || null); // Return null if no user is found
         }
     });
 }
@@ -40,11 +39,11 @@ function loginUser(email, callback) {
 // Get user by ID
 function getUserById(id, callback) {
     const query = `SELECT * FROM users WHERE id = ?`;
-    db.get(query, [id], (err, row) => {
+    db.query(query, [id], (err, results) => {
         if (err) {
             callback(err);
         } else {
-            callback(null, row);
+            callback(null, results[0] || null); // Return null if no user is found
         }
     });
 }

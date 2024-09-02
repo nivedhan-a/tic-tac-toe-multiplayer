@@ -1,39 +1,66 @@
-const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql2');
+require('dotenv').config();
 
-// Connect to the database (or create it if it doesn't exist)
-const db = new sqlite3.Database('game.db', (err) => {
+// Create a connection to the MySQL database
+const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+
+// Connect to the database
+db.connect((err) => {
     if (err) {
-        console.error('Error opening database:', err.message);
+        console.error('Error connecting to the database:', err.message);
     } else {
-        console.log('Connected to the SQLite database.');
+        console.log('Connected to the MySQL database.');
     }
 });
 
 // Create Users table
-db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE NOT NULL,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-)`);
+db.query(`CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+)`, (err, results) => {
+    if (err) {
+        console.error('Error creating Users table:', err.message);
+    } else {
+        console.log('Users table created or already exists.');
+    }
+});
 
 // Create Friends table
-db.run(`CREATE TABLE IF NOT EXISTS friends (
-    user_id INTEGER,
-    friend_id INTEGER,
+db.query(`CREATE TABLE IF NOT EXISTS friends (
+    user_id INT,
+    friend_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (friend_id) REFERENCES users(id)
-)`);
+)`, (err, results) => {
+    if (err) {
+        console.error('Error creating Friends table:', err.message);
+    } else {
+        console.log('Friends table created or already exists.');
+    }
+});
 
 // Create Scores table
-db.run(`CREATE TABLE IF NOT EXISTS scores (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    opponent_id INTEGER,
-    score INTEGER,
-    game_date TEXT,
+db.query(`CREATE TABLE IF NOT EXISTS scores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    opponent_id INT,
+    score INT,
+    game_date DATETIME,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (opponent_id) REFERENCES users(id)
-)`);
+)`, (err, results) => {
+    if (err) {
+        console.error('Error creating Scores table:', err.message);
+    } else {
+        console.log('Scores table created or already exists.');
+    }
+});
 
 module.exports = db;

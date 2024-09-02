@@ -1,9 +1,8 @@
-const db = require('../db/database');
-
-// Add a new user
+const db = require('../db/database'); 
+// Add a new friend
 function addFriend(userId, friendId, callback) {
     const query = `INSERT INTO friends (user_id, friend_id) VALUES (?, ?)`;
-    db.run(query, [userId, friendId], function(err) {
+    db.execute(query, [userId, friendId], (err) => {
         if (err) {
             return callback(err);
         }
@@ -14,7 +13,7 @@ function addFriend(userId, friendId, callback) {
 // Get friends of a user
 function getFriends(userId, callback) {
     const query = `SELECT u.* FROM users u JOIN friends f ON u.id = f.friend_id WHERE f.user_id = ?`;
-    db.all(query, [userId], (err, rows) => {
+    db.query(query, [userId], (err, rows) => {
         if (err) {
             return callback(err);
         }
