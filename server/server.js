@@ -7,7 +7,7 @@ const friendRoutes = require("./routes/friendRoutes");
 const scoreRoutes = require("./routes/scoreRoutes");
 const socketIo = require("socket.io");
 const socketController = require("./controllers/socketController");
-require('dotenv').config();
+
 
 
 const app = express();
@@ -16,7 +16,7 @@ const server = http.createServer(app);
 app.set('server', server);
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://tic-tac-toe-multiplayer-frontend.vercel.app",
   methods: ["GET", "POST"],
   credentials: true,
 }));
@@ -33,7 +33,7 @@ app.use("/scores", scoreRoutes);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://tic-tac-toe-multiplayer-frontend.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
