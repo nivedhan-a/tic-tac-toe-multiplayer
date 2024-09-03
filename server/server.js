@@ -21,11 +21,7 @@ const server = http.createServer(app);
 
 app.set('server', server);
 
-app.use(cors({
-  origin: "https://tic-tac-toe-multiplayer-frontend.vercel.app",
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
+app.use(cors(corsConfig));
 
 app.get('/', (req, res) => {
   console.log(req);
