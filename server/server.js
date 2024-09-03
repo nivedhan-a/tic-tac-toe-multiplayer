@@ -11,6 +11,7 @@ const socketController = require("./controllers/socketController");
 
 
 const app = express();
+app.use(express.json());
 const server = http.createServer(app);
 
 app.set('server', server);
