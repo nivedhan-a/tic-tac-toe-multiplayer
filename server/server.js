@@ -22,9 +22,10 @@ app.use(cors({
   credentials: true,
 }));
 
-app.get("/", (req,res) => {
-  res.json("Hello");
-})
+app.get('/', (req, res) => {
+  console.log(req);
+  return res.status(200).send('hey hey'); // Use 200 for success
+});
 
 app.use(bodyParser.json());
 
