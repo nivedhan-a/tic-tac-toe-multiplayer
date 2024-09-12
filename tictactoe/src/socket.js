@@ -6,6 +6,7 @@
 const URL = 'https://universal-checker-hourglass.glitch.me';
 const socket = io(URL);
 // socket.js
+export default socket;
 */
 
 import io from 'socket.io-client';
@@ -20,4 +21,4 @@ const socket = io(URL, {
 });
 
 export default socket;
-export default socket;
+
