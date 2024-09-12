@@ -3,7 +3,7 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const corsConfig = {
-  origin : "*",
+  origin : "https://tic-tac-toe-multiplayer-api.vercel.app",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"]
 };
