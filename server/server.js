@@ -37,7 +37,7 @@ app.use("/scores", scoreRoutes);
 
 const io = socketIo(server, {
   cors: {
-    origin: "https://tic-tac-toe-multiplayer-frontend.vercel.app",
+    origin: "https://tic-tac-toe-multiplayer-api.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
