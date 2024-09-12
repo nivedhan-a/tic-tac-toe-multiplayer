@@ -7,7 +7,6 @@ const corsConfig = {
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"]
 };
-app.options("", cors(corsConfig));
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendRoutes");
 const scoreRoutes = require("./routes/scoreRoutes");
@@ -23,11 +22,6 @@ const server = http.createServer(app);
 app.set('server', server);
 
 app.use(cors(corsConfig));
-
-app.get('/', (req, res) => {
-  console.log(req);
-  return res.status(200).send('hey hey'); // Use 200 for success
-});
 
 app.use(bodyParser.json());
 
@@ -45,6 +39,6 @@ const io = socketIo(server, {
 
 socketController(io);
 
-/*server.listen(4000, () => {
+server.listen(4000, () => {
   console.log("Listening on *:4000");
-});*/
+});
