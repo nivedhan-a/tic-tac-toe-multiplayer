@@ -11,7 +11,7 @@ const socketController = require("./controllers/socketController");
 
 
 const app = express();
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/", (req, res) => res.send("Hey hey"));
 const server = http.createServer(app);
 
 app.set('server', server);
